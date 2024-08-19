@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-service-deployment
+  labels:
+    app: test-service
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: test-service-inst
+  template:
+    metadata:
+      labels:
+        app: test-service-inst
+    spec:
+      containers:
+      - name: test-service-app
+        image: us-central1-docker.pkg.dev/austintestproject-432819/test-service/test-service:0.1.2
+        ports:
+        - containerPort: 8000

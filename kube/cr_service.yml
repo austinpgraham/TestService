@@ -1,0 +1,20 @@
+apiVersion: cloud.google.com/v1
+kind: BackendConfig
+metadata:
+  name: cloud-run-backend
+spec:
+  customRequestHeaders:
+    headers:
+    # Helps with HTTP/HTTPS hostname verification
+    - "Host: test-service-5bkeoexgxq-uc.a.run.app"
+  timeoutSec: 30
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    cloud.google.com/backend-config: '{"default": "cloud-run-backend"}'
+  name: cloud-run-test-service
+spec:
+  type: ExternalName
+  externalName: "test-service-5bkeoexgxq-uc.a.run.app"
